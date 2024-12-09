@@ -1,8 +1,4 @@
-import { Routes } from "react-router";
-
-import { Navigate, Route } from 'react-router'
-import { LoginPage } from '../pages/LoginPage'
-import { RegisterPage } from '../pages/RegisterPage'
+import { Outlet, Navigate } from "react-router";
 import { useAppSelector } from "../../store/hooks";
 
 const AuthLayout = () => {
@@ -11,14 +7,13 @@ const AuthLayout = () => {
     return (
 
         ( authStatus !== 'authenticated' )
-        ?   (<>
-                <h1>Auth Layout</h1>
-                <Routes>
-                    <Route path="login" element={ <LoginPage /> } />
-                    <Route path="register" element={ <RegisterPage /> } />
-                    <Route path="*" element={ <Navigate replace to="/auth/login" />} />
-                </Routes>
-            </>)
+        ? (
+            <main className="auth-layout-container">
+                <section className="auth-card">
+                    <Outlet />
+                </section>
+            </main>
+        )
         : ( <Navigate to="/repositories" replace /> )
     )
 }

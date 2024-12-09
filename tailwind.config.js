@@ -6,7 +6,12 @@ export default {
   ],
   darkMode: 'class',
   theme: {
-    extend: {},
+    extend: {
+      screens: {
+        'mxl': '1050px',
+        'smp': '430px'
+      }
+    },
   },
   plugins: [],
 }

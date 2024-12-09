@@ -4,10 +4,19 @@ type AuthStatus = 'non-authenticated' | 'authenticated' | 'validating';
 
 export interface AuthState {
    authStatus: AuthStatus;
+   uid: string;
+   email: string;
+   displayName: string;
+   errorMessage?: string;
+
 }
 
 const initialState: AuthState = {
-   authStatus: 'authenticated'
+   authStatus: 'non-authenticated',
+   uid: '',
+   email: '',
+   displayName: '',
+   errorMessage: '',
 }
 
 export const authSlice = createSlice({
@@ -15,21 +24,29 @@ export const authSlice = createSlice({
    initialState,
    reducers: {
 
-      startLogin: ( state, action ) => {
+      checkingCredentials: ( state ) => {
          state.authStatus = 'validating'
       },
 
-      login: (state, action ) => {
-           state.authStatus = 'authenticated'
+      logout: (state, { payload } ) => {
+         state.authStatus = 'non-authenticated',
+         state.uid = '',
+         state.email = '',
+         state.displayName = '',
+         state.errorMessage = payload.errorMessage
       },
 
-      logout: ( state ) => {
-         state.authStatus = 'non-authenticated';
+      login: ( state, { payload }) => {
+         state.authStatus = 'authenticated';
+         state.email = payload.email;
+         state.uid = payload.uid
+         state.displayName = payload.displayName
+
       }
    }
 });
 export const {
    login,
    logout,
-   startLogin,
+   checkingCredentials,
 } = authSlice.actions;

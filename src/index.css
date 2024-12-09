@@ -1,3 +1,50 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+
+    .auth-layout-container {
+        @apply h-[100vh] w-[100%]
+    }
+
+    .auth-card {
+        @apply p-[2rem] m-[2rem] min-w-[30%] max-smp:max-w-[90%] max-sm:max-w-[80%] max-mxl:max-w-[50%] max-w-[30%] max-h-[38%] h-[100%] bg-gray-300 rounded-3xl shadow-2xl
+    }
+    
+
+    .tw-border {
+        @apply border border-gray-600;
+    }
+    
+    .form-container {
+        @apply mt-2 flex flex-col p-[1rem] gap-6
+    }
+
+    .form-input {
+        @apply p-[0.5rem] w-full shadow-lg appearance-none rounded-lg 
+    }
+
+
+    .form-btn {
+        @apply p-[1rem] w-full bg-slate-700 rounded-full shadow-lg text-white
+    }
+
+    .form-footer {
+        @apply mt-[0.1rem]
+    }
+}
+
+.auth-layout-container {
+    /* margin: auto; */
+    position: relative;
+}
+
+.auth-card {
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
