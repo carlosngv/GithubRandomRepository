@@ -8,8 +8,11 @@
         @apply h-[100vh] w-[100%]
     }
 
+    /* .auth-card {
+        @apply p-[2rem] m-[2rem] min-w-[30%] max-smp:max-w-[90%] max-sm:max-w-[80%] max-mxl:max-w-[50%] max-w-[30%] max-mxl:max-h-[%50] max-h-[52%] h-[100%] bg-gray-300 rounded-3xl shadow-2xl
+    } */
     .auth-card {
-        @apply p-[2rem] m-[2rem] min-w-[30%] max-smp:max-w-[90%] max-sm:max-w-[80%] max-mxl:max-w-[50%] max-w-[30%] max-h-[38%] h-[100%] bg-gray-300 rounded-3xl shadow-2xl
+        @apply p-[2rem] m-[2rem] min-w-[30%] max-w-[30%] max-smp:max-w-[90%] max-sm:max-w-[80%] mxl:max-w-[30%]  h-[30rem] bg-gray-300 rounded-3xl shadow-2xl
     }
     
 
@@ -25,9 +28,21 @@
         @apply p-[0.5rem] w-full shadow-lg appearance-none rounded-lg 
     }
 
+    .form-control {
+        @apply flex flex-col gap-2
+    }
+
+    .form-label {
+        @apply font-bold 
+    }
+
 
     .form-btn {
         @apply p-[1rem] w-full bg-slate-700 rounded-full shadow-lg text-white
+    }
+
+    .form-buttons {
+        @apply flex gap-3
     }
 
     .form-footer {
@@ -47,4 +62,19 @@
     left: 0;
     right: 0;
     bottom: 0;
+}
+
+.loading-spinner {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    border: 1px solid black;
+    height: 100vh;
+    width: 100%;
+    z-index: 99;
+    background: rgba(128, 128, 128, 0.33); 
+    color: black !important;
 }

@@ -28,12 +28,12 @@ export const authSlice = createSlice({
          state.authStatus = 'validating'
       },
 
-      logout: (state, { payload } ) => {
+      logout: (state ) => {
          state.authStatus = 'non-authenticated',
          state.uid = '',
          state.email = '',
          state.displayName = '',
-         state.errorMessage = payload.errorMessage
+         state.errorMessage = ''
       },
 
       login: ( state, { payload }) => {
@@ -42,6 +42,9 @@ export const authSlice = createSlice({
          state.uid = payload.uid
          state.displayName = payload.displayName
 
+      },
+      setErrorMessage: ( state, { payload } ) => {
+         state.errorMessage = payload
       }
    }
 });
@@ -49,4 +52,5 @@ export const {
    login,
    logout,
    checkingCredentials,
+   setErrorMessage,
 } = authSlice.actions;

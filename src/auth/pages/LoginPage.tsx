@@ -1,15 +1,32 @@
 import { NavLink } from "react-router";
 import { useForm } from "../../shared/hooks/useForm"
-import { SyntheticEvent, useMemo } from 'react';
+import { SyntheticEvent, useEffect, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { startGoogleSignIn } from "../../store/auth/thunks";
+import { startEmailSignIn, startGoogleSignIn } from "../../store/auth/thunks";
+
+import Swal from 'sweetalert2';
+import { LoadingSpinner } from "../../shared/components/LoadingSpinner";
 
 
 export const LoginPage = (  ) => {
 
-    const { authStatus } = useAppSelector( state => state.auth );
+    const { authStatus, errorMessage } = useAppSelector( state => state.auth );
 
     const useDispatch = useAppDispatch();
+    
+    useEffect(() => {
+
+        if( errorMessage ) {
+            Swal.fire({
+                title: 'Invalid Credentials!',
+                text: errorMessage,
+                icon: 'error',
+                confirmButtonText: 'Ok'
+              })
+        }
+      
+    }, [ errorMessage ])
+    
 
     const { formState, onResetForm, onValueChange } = useForm<{ email: string, password: string }>({
         email: '',
@@ -18,15 +35,14 @@ export const LoginPage = (  ) => {
 
     const isAuthenticating = useMemo(() => authStatus === 'validating', [ authStatus ]);
 
-    const onHandleSubmit = ( e: SyntheticEvent ) => {
+    const onEmailSignIn = ( e: SyntheticEvent ) => {
         e.preventDefault();
-        console.log({formState});
+        useDispatch( startEmailSignIn( formState.email, formState.password ) );
         onResetForm();
     }
 
     const onGoogleSignIn = ( e: SyntheticEvent ) => {
         e.preventDefault();
-        console.log({formState});
         useDispatch( startGoogleSignIn() )
         onResetForm();
     }
@@ -41,16 +57,16 @@ export const LoginPage = (  ) => {
             </header>
             <form>
                 <div className="form-container">
-                    <div className="">
+                    <div className="form-control">
+                        <label className="form-label">Email</label>
                         <input className="form-input" value={ formState.email } name="email" onChange={ onValueChange } type="email" placeholder="Email" autoComplete="off" />
                     </div>
-                    <div className="">
+                    <div className="form-control">
+                        <label className="form-label">Password</label>
                         <input className="form-input" value={ formState.password } name="password"  onChange={ onValueChange } type="password" placeholder="Password" autoComplete="off" />
                     </div>
-                    <div className="">
-                        <button className="form-btn" onClick={ onHandleSubmit } disabled={ isAuthenticating }>Sign in</button>
-                    </div>
-                    <div className="">
+                    <div className="form-buttons">
+                        <button className="form-btn" onClick={ onEmailSignIn } disabled={ isAuthenticating }>Sign in</button>
                         <button className="form-btn" onClick={ onGoogleSignIn } disabled={ isAuthenticating }> <i className="fa-brands fa-google"></i> Google</button>
                     </div>
                 </div>
